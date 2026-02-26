@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  flex: 1;
+}
+
+.json-value-editor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 400px;
+}
+
+.json-value-editor ion-input {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 14px;
+}
+
+.json-type-string {
+  --background: var(--ion-color-light);
+}
+
+.json-type-number {
+  --background: var(--ion-color-light);
+}
+
+.type-boolean {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.type-boolean-label {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.json-type-null {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+  font-style: italic;
+}
+
+.json-type-unknown {
+  font-size: 14px;
+  color: var(--ion-color-danger);
+}

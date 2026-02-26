@@ -1,0 +1,23 @@
+:host {
+  position: absolute;
+  z-index: 1000;
+}
+
+.toolbar-container {
+  position: fixed;
+  background-color: var(--ion-background-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  width: 300px;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none; /* Prevents interaction when hidden */
+}
+
+.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* Re-enable interaction when visible */
+}

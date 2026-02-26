@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2021"
+    ],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "ES2021",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "jsxFactory": "h"
+  },
+  "include": [
+    "src", 
+    "scripts/generate-version.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

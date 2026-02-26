@@ -1,0 +1,65 @@
+{
+  "environments": [
+    {
+      "id": "dv2",
+      "name": "DV2",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.dv2.cloud.tenna.com/be-crud",
+      "client_id": "7j5dd5f0luv0t8v113411m8j1h",
+      "cognito_domain": "https://cognito-idp.us-east-2.amazonaws.com",
+      "pool_id": "us-east-2_Z5HPk9CvJ"
+    },
+    {
+      "id": "dv3",
+      "name": "DV3",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.dv3.cloud.tenna.com/be-crud",
+      "client_id": "4e106pqede57ff6jhojcmn67eh",
+      "cognito_domain": "https://cognito-idp.us-east-1.amazonaws.com",
+      "pool_id": "us-east-1_bzoJ8XKoe"
+    },
+    {
+      "id": "qa1",
+      "name": "QA1",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.qa1.cloud.tenna.com/be-crud",
+      "client_id": "3vdua00m5p90rhg4h99bskpb7d",
+      "cognito_domain": "https://cognito-idp.us-east-2.amazonaws.com",
+      "pool_id": "us-east-2_d5nWIlF7U"
+    },
+    {
+      "id": "demo",
+      "name": "Demo",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.demo.cloud.tenna.com/be-crud",
+      "client_id": "2786h74vv8e4n4g17ethoj7ku3",
+      "cognito_domain": "https://cognito-idp.us-east-2.amazonaws.com",
+      "pool_id": "us-east-1_Dedr0hx83"
+    },
+    {
+      "id": "stg",
+      "name": "STG",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.stg.cloud.tenna.com/be-crud",
+      "client_id": "65ajp1ifcr1n6skuobtdaof5mg",
+      "cognito_domain": "https://cognito-idp.us-east-1.amazonaws.com",
+      "pool_id": "us-east-1_syJcn1CAk"
+    },
+    {
+      "id": "prd",
+      "name": "PROD",
+      "tenna_api_protocol": "https",
+      "tenna_api_domain": "services.api.prd.cloud.tenna.com/be-crud",
+      "client_id": "3illttt3jspapn3bvij1gj9lsm",
+      "cognito_domain": "https://cognito-idp.us-east-1.amazonaws.com",
+      "pool_id": "us-east-1_OcObtz01o"
+    },
+    {
+      "id": "local",
+      "name": "Local",
+      "tenna_api_domain": "localhost:3000/api",
+      "tenna_api_protocol": "http",
+      "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b206dXNlcl9pZCI6IjliYmExOWQ1LTI2YzktMWVlMS04NTIwLTViMzFkMWZhNTk1YSIsImN1c3RvbTphY2NvdW50X2lkIjoiNTEzOWRhNjMtZTQ4MC00MmI1LWEzZGUtMTk3OWZhNTU5MzM4IiwiY3VzdG9tOnVzZXJfdHlwZSI6ImFkbWluIiwiaWF0IjoxNTE2MjM5MDI0fQ.2I0qllUPB6CIoBs_cvRVy0aV-hdEZFQLfMVAIn45V64"
+    }
+  ]
+}

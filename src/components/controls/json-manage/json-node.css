@@ -1,0 +1,96 @@
+:host {
+  display: block;
+}
+
+.json-item-row {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.json-root-item {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.json-key {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+  cursor: pointer;
+}
+
+.json-key.expandable:hover {
+  opacity: 0.7;
+}
+
+.json-expand-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.json-spacer {
+  width: 16px;
+  flex-shrink: 0;
+}
+
+.json-key-name {
+  font-size: 14px;
+}
+
+.json-root-key {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+
+.json-key-index {
+  color: var(--ion-color-medium);
+  font-style: italic;
+}
+
+.json-colon {
+  margin-left: 2px;
+  color: var(--ion-color-medium);
+}
+
+.json-type-icon {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.json-type-icon ion-icon {
+  font-size: 18px;
+  color: var(--ion-color-medium);
+}
+
+.json-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.json-actions ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+  margin: 0;
+  height: 32px;
+}
+
+.json-summary {
+  font-size: 12px;
+  color: var(--ion-color-medium);
+  font-style: italic;
+  margin-left: 8px;
+}
+
+.json-children {
+  margin-left: 0;
+}

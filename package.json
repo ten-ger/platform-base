@@ -1,0 +1,27 @@
+{
+  "name": "platform-base",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Platform Base",
+  "scripts": {
+    "build": "npm run generate-version && stencil build --prod",
+    "start": "stencil build --dev --watch --serve",
+    "generate-version": "node scripts/generate-version.js"
+  },
+  "dependencies": {
+    "@ionic/core": "8.7.16",
+    "@turf/turf": "7.3.1",
+    "ag-grid-enterprise": "35.0.0",
+    "axios": "1.13.2",
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0",
+    "dexie": "4.2.1",
+    "firebase": "12.9.0",
+    "ol": "10.7.0",
+    "papaparse": "5.5.3"
+  },
+  "devDependencies": {
+    "@stencil/core": "4.22.2"
+  },
+  "license": "UNLICENSED"
+}

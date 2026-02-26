@@ -1,0 +1,16 @@
+:host {
+  /* Ensures the custom web component itself (the host element)
+     behaves like an inline element for layout purposes. */
+  display: inline-block;
+}
+
+/* Apply a smooth transition to the ion-icon's opacity */
+ion-icon {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* When the ion-button is hovered, set the ion-icon's opacity to 1.
+   !important is used to ensure it overrides the inline 'opacity' style set by the component's prop. */
+ion-button:hover ion-icon {
+  opacity: 1 !important;
+}

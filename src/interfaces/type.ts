@@ -1,0 +1,1 @@
+type ViewportSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

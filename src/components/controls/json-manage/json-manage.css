@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.json-manager-list {
+  margin: 0;
+  padding: 0;
+  /* Use full width */
+  width: 100%; 
+}
+
+.json-manager-list-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+}
+
+/* Root Item Styling */
+.json-root-item {
+    font-weight: bold;
+    --background: var(--ion-color-light-tint, #f4f5f8);
+    cursor: pointer;
+}
+
+/* Common Item Row Styling */
+.json-item-row {
+  display: flex;
+  align-items: center;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: var(--ion-background-color, #ffffff);
+}
+
+/* Key/Index Column */
+.json-key {
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  flex-shrink: 0;
+}
+
+.json-key-name {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: var(--ion-color-medium-shade, #737373);
+}
+
+.json-key-name b {
+    color: var(--ion-color-primary, #3880ff); /* Key names in primary color */
+    font-weight: normal;
+}
+
+.json-key-index {
+    color: var(--ion-color-tertiary, #5260ff); /* Array indices in tertiary color */
+}
+
+.json-colon {
+  margin-left: 5px;
+  margin-right: 10px;
+  color: var(--ion-color-dark-tint, #303030);
+}
+
+/* Tree Controls */
+.json-expand-icon {
+  font-size: 1.1em;
+  min-width: 15px;
+  color: var(--ion-color-medium, #929a9c);
+}
+
+.json-spacer {
+  min-width: 15px;
+  margin-left: 5px;
+}
+
+.json-type-icon {
+  font-size: 1.2em;
+  color: var(--ion-color-medium, #929a9c);
+  margin-right: 8px;
+}
+
+/* Value Editor and Primitive Styling */
+.json-value-editor {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.json-value-editor ion-input {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    --padding-top: 2px;
+    --padding-bottom: 2px;
+    background: var(--ion-color-light-tint, #f9f9f9);
+    border: 1px solid var(--ion-color-medium-tint, #d3d3d3);
+    border-radius: 4px;
+    font-size: 0.9em;
+    min-height: 25px;
+}
+
+.json-type-string {
+    color: var(--ion-color-danger, #eb445a); /* Red for string */
+}
+
+.json-type-number {
+    color: var(--ion-color-tertiary, #5260ff); /* Blue/Purple for number */
+}
+
+.json-type-null {
+    color: var(--ion-color-medium, #929a9c);
+    font-style: italic;
+    padding: 0 5px;
+}
+
+.json-summary {
+    color: var(--ion-color-medium, #929a9c);
+    font-style: italic;
+    font-weight: 500;
+    padding: 0 5px;
+}
+
+.type-boolean {
+    display: flex;
+    align-items: center;
+}
+.type-boolean-label {
+    margin-left: 8px;
+    color: var(--ion-color-success, #2fdf75);
+}
+
+/* Action Buttons */
+.json-actions {
+  display: flex;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.json-actions ion-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  height: 25px;
+  width: 25px;
+}
+
+/* Header actions */
+.header-actions ion-button {
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+}

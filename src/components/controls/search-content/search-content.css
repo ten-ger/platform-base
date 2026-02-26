@@ -1,0 +1,33 @@
+/*
+  The host selector sets the component to an absolute position
+  relative to its first positioned ancestor.
+*/
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--ion-background-color);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.results-container {
+  position: absolute;
+  z-index: 1001;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+ion-list {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
