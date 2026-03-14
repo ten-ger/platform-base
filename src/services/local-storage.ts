@@ -1,21 +1,28 @@
 class LocalStorageController {
 
   storage = window.localStorage;
+  sessionStorage = window.sessionStorage;
   storageKeyPrefix: string = '';
   
-  async setLocalStoragePrefix(prefix) {
+  setLocalStoragePrefix(prefix) {
     this.storageKeyPrefix = prefix;
   }
 
-  async testForLocalStorage() {
+  testForLocalStorage() {
     if (!this.storage) {
       throw "Local storage unavailable.";
     }
   }
 
-  async set(keySuffix: string, value: any) {
+  testForSessionStorage() {
+    if (!window.sessionStorage) {
+      throw "Session storage unavailable.";
+    }
+  }
+
+  set(keySuffix: string, value: any) {
     try {
-      await this.testForLocalStorage();
+      this.testForLocalStorage();
       this.storage.setItem(this.storageKeyPrefix + keySuffix, JSON.stringify(value));
     }
     catch (error) {
@@ -23,9 +30,9 @@ class LocalStorageController {
     }
   }
 
-  async get(keySuffix: string) {
+  get(keySuffix: string) {
     try {
-      await this.testForLocalStorage();
+      this.testForLocalStorage();
       const item = this.storage.getItem(this.storageKeyPrefix + keySuffix);
       return JSON.parse(item);
     }
@@ -34,36 +41,41 @@ class LocalStorageController {
     }
   }
 
-  async clearSession(keyPrefix?: string) {
+  remove(keySuffix: string) {
     try {
-      let sessionKeys = Object.keys(window.sessionStorage);
-      if (keyPrefix) {
-        sessionKeys = sessionKeys.filter(k => k.startsWith(keyPrefix));
-      }
-      for (let key of sessionKeys) {
-        window.sessionStorage.removeItem(key);
-      }
-    }
-    catch (error) {
-      throw `Unable to clear session storage due to error:` + error.message;
-    }
-  }
-
-  async getFromSession(keyPrefix: string) {
-    try {
-      let sessionKeys = Object.keys(window.sessionStorage);
-      let key = sessionKeys.find(k => k.startsWith(keyPrefix));
-      return window.sessionStorage.getItem(key);
-    }
-    catch (error) {
-      throw `Unable to get value from session storage: ${keyPrefix} due to error:` + error.message;
-    }
-  }
-
-  async remove(keySuffix: string) {
-    try {
-      await this.testForLocalStorage();
+      this.testForLocalStorage();
       this.storage.removeItem(this.storageKeyPrefix + keySuffix);
+    }
+    catch (error) {
+      throw `Unable to remove value from local storage: ${this.storageKeyPrefix + keySuffix} due to error:` + error.message;
+    }
+  }
+
+  setToSession(keySuffix: string, value: any) {
+    try {
+      this.testForSessionStorage();
+      this.sessionStorage.setItem(this.storageKeyPrefix + keySuffix, JSON.stringify(value));
+    }
+    catch (error) {
+      throw `Unable to store value in session storage: ${value} due to error:` + error.message;
+    }
+  }
+
+  getFromSession(keySuffix: string) {
+    try {
+      this.testForSessionStorage();
+      const item = this.sessionStorage.getItem(this.storageKeyPrefix + keySuffix);
+      return JSON.parse(item);
+    }
+    catch (error) {
+      throw `Unable to get value from session storage: ${this.storageKeyPrefix + keySuffix} due to error:` + error.message;
+    }
+  }
+
+  removeFromSession(keySuffix: string) {
+    try {
+      this.testForSessionStorage();
+      this.sessionStorage.removeItem(this.storageKeyPrefix + keySuffix);
     }
     catch (error) {
       throw `Unable to remove value from local storage: ${this.storageKeyPrefix + keySuffix} due to error:` + error.message;

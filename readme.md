@@ -12,6 +12,7 @@ NOTE - update the section [[your intended purpose here]]
 This project is intended to be a frontend-only utility app for [[your intended purpose here]]. 
 The app is based on StencilJS as single page app, and it heavily uses Ionic components for app structure, routing, and the basis for many lower-level components.
 To support data access and other consolidated logic, singleton services exist and should be created in src/services. Please review existing services to understand the common controller > service paradigm.
+Application state is managed using the app-state.ts or "App" service. Web components can bind local state variables to app state using App.bindState() and should use App.unbindState() as the component is being disconnected from the DOM.
 In the specs directory, information should be captured and organized to ensure standards are followed with component generation, API usage (if applicable), and local data management.
 Whenever generating a new web component, always check the src/components/controls directory for reusable components with which to build a more sophisticated component.
 Web components that represent pages are being generated, they should always go in the src/components/pages directory. Modals go in the src/components/modals directory.
@@ -48,3 +49,4 @@ For convenience, this project assumes the app will be deployed to Firebase for w
 - Under Settings > General > Your apps, click to associate a "Web" app, following the prompts to establish Firebase Hosting, if desired.
 - When prompted to "Add Firebase SDK" copy the firebaseConfig information into src/services/firebase-app.ts
 - If not already installed, follow the prompts to install Firebase CLI and log into Firebase. 
+- Uncomment

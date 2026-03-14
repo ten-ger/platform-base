@@ -9,6 +9,8 @@ import { MenuService } from '../../services/menu';
 import { RouterService } from '../../services/router';
 import { appVersion } from '../../version';
 import { Account, User } from '../../interfaces/application';
+import { FirebaseAppService } from '../../services/firebase-app';
+import { FirestoreBaseService } from '../../services/firestore';
 
 @Component({
   tag: 'app-root'
@@ -16,7 +18,7 @@ import { Account, User } from '../../interfaces/application';
 export class AppRoot {
 
   @State() darkThemeEnabled: boolean;
-  @State() isLargeView: boolean;
+  @State() viewportSize: string;
   @State() isSplitPaneWide: boolean = true;
   @State() currentUser: User | null = null;
   @State() selectedAccount: Account | null = null;
@@ -34,9 +36,12 @@ export class AppRoot {
     await this.loadAppConfigSettings();
     await LocalStorageService.setLocalStoragePrefix(`${this.appConfigSettings.applicationSlug}-`);
     await App.initialize(); // must come after setting local storage prefix
+    await FirebaseAppService.initialize();
+    await FirestoreBaseService.initialize();
     await UserPreferencesService.initialize();
     await Log.setLogLevel(this.appConfigSettings.logLevel || "debug");
     await this.initializeDatabase();
+    App.bindAppState(this, 'viewportSize', (value) => { this.viewportSize = value; });
     // Detect user's system setting for preferred theme
     this.darkThemeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
     this.isSplitPaneWide = App.getState('isSplitPaneWide');
@@ -48,22 +53,23 @@ export class AppRoot {
     await App.registerEventHandlers();
     await App.setState('darkThemeEnabled', this.darkThemeEnabled);
     let vpWidth = document.body.clientWidth;
-    this.isLargeView = ['lg', 'xl'].includes(App.getViewportSize(document.body.clientWidth));
     await App.setViewportSize(vpWidth);
-    Log.debug('isLargeView', this.isLargeView.toString());
-  }
-
-  @Listen('viewportSizeChanged', { target: 'document' })
-  viewportSizeChangedHandler(event: CustomEvent<ViewportSize>) {
-    this.isLargeView = ['lg', 'xl'].includes(event.detail);
-    Log.debug('app-root: viewport size change:', event.detail);
   }
 
   @Listen('userChanged', { target: 'document' })
   async hUserChanged(event: any) {
     Log.debug('User changed', event);
-    this.currentUser = event.detail;
-    await RouterService.setRoot('/home');
+    if (event?.detail?.id) {
+      this.currentUser = event.detail;
+    }
+    else {
+      this.currentUser = null;
+    }
+    setTimeout(() => { RouterService.setRoot('/') }, 100);
+  }
+
+  private get isLargeView(): boolean {
+    return ['lg', 'xl'].includes(this.viewportSize);
   }
 
   async loadAppManifest() {

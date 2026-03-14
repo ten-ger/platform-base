@@ -4,7 +4,7 @@ import { Log } from "./log";
 
 class AppStateController {
 
-  state = {}; // as AppState;
+  state = {};
 
   xsMin = 1;
   xsMax = 319;
@@ -18,11 +18,8 @@ class AppStateController {
   xlMax = 99999;
 
   async initialize() {
-
     try {
-
-      const savedState = await LocalStorageService.get('state');
-
+      const savedState = LocalStorageService.get('state');
       if (savedState) {
         this.state = savedState;
       }
@@ -33,7 +30,6 @@ class AppStateController {
   }
 
   async registerEventHandlers() {
-
     // Create media query for user color theme preference
     const userPrefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
     // Set initial theme based on preference
@@ -69,6 +65,7 @@ class AppStateController {
     else if (clientWidth >= this.lgMin && clientWidth <= this.lgMax) { return 'lg'; }
     else { return 'xl'; }
   }
+
   async setViewportSize(clientWidth: number) {
     const newSize = this.getViewportSize(clientWidth);
     if (this.getState('viewportSize') !== newSize) {
@@ -90,7 +87,7 @@ class AppStateController {
   }
 
   async persistState() {
-    await LocalStorageService.set('state', this.state);
+    LocalStorageService.set('state', this.state);
   }
 
   getState(property: string) {
@@ -98,10 +95,39 @@ class AppStateController {
   }
 
   async setState(property: string, value: any) {
-    //if (this.state[property] == value) { return }
     this.state[property] = value;
     await this.persistState();
     this.emitEvent(`${property}Changed`, value);
+  }
+
+  bindAppState(
+    component: any,
+    stateKey: string,
+    onChanged: (value: any) => void,
+    callOnChangedImmediately: boolean = true
+  ) {
+    const eventName = `${stateKey}Changed`;
+    const handlerKey = `__appState_${stateKey}_handler`;
+
+    if (callOnChangedImmediately) {
+      onChanged(this.getState(stateKey));
+    }
+
+    component[handlerKey] = async (event: any) => {
+      onChanged(event?.detail);
+    };
+
+    document.addEventListener(eventName, component[handlerKey]);
+  }
+
+  unbindAppState(component: any, stateKeys: string[]) {
+    for (let stateKey of stateKeys) {
+      const eventName = `${stateKey}Changed`;
+      const handlerKey = `__appState_${stateKey}_handler`;
+      if (component[handlerKey]) {
+        document.removeEventListener(eventName, component[handlerKey]);
+      }
+    }
   }
 }
 
