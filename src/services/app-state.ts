@@ -50,6 +50,13 @@ class AppStateController {
     mediumSize.addEventListener('change', (e) => this.handleViewportSizeChanged(e, 'md'));
     largeSize.addEventListener('change', (e) => this.handleViewportSizeChanged(e, 'lg'));
     extraLargeSize.addEventListener('change', (e) => this.handleViewportSizeChanged(e, 'xl'));
+
+    // Detect primary input device type: 'mouse' supports hover, 'touch' does not.
+    // Some devices (e.g. detachable tablets) can switch modes, so we listen for changes.
+    const mouseInput = window.matchMedia("(hover: hover) and (pointer: fine)");
+    mouseInput.addEventListener('change', (e) => {
+      this.setState('deviceInputType', e.matches ? 'mouse' : 'touch');
+    });
   }
 
   async handleViewportSizeChanged(event: any, size: ViewportSize) {
@@ -70,6 +77,17 @@ class AppStateController {
     const newSize = this.getViewportSize(clientWidth);
     if (this.getState('viewportSize') !== newSize) {
       await this.setState('viewportSize', newSize);
+    }
+  }
+
+  getDeviceInputType(): DeviceInputType {
+    return window.matchMedia("(hover: hover) and (pointer: fine)").matches ? 'mouse' : 'touch';
+  }
+
+  async setDeviceInputType() {
+    const inputType = this.getDeviceInputType();
+    if (this.getState('deviceInputType') !== inputType) {
+      await this.setState('deviceInputType', inputType);
     }
   }
 

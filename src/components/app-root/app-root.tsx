@@ -54,6 +54,7 @@ export class AppRoot {
     await App.setState('darkThemeEnabled', this.darkThemeEnabled);
     let vpWidth = document.body.clientWidth;
     await App.setViewportSize(vpWidth);
+    await App.setDeviceInputType();
   }
 
   @Listen('userChanged', { target: 'document' })
