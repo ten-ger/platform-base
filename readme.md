@@ -49,4 +49,5 @@ For convenience, this project assumes the app will be deployed to Firebase for w
 - Under Settings > General > Your apps, click to associate a "Web" app, following the prompts to establish Firebase Hosting, if desired.
 - When prompted to "Add Firebase SDK" copy the firebaseConfig information into src/services/firebase-app.ts
 - If not already installed, follow the prompts to install Firebase CLI and log into Firebase. 
-- Uncomment
+- Uncomment the lines related to Firebase in app-root.tsx
+- Prompt for guidance on other setup steps with Gemini or Claude, as needed.

@@ -4,7 +4,7 @@
 
 export const appVersion = {
   Y: 26,
-  doy: 73,
-  b: '091619',
-  full: '26.73.091619'
+  doy: 92,
+  b: '105818',
+  full: '26.92.105818'
 };

@@ -9,8 +9,8 @@ import { MenuService } from '../../services/menu';
 import { RouterService } from '../../services/router';
 import { appVersion } from '../../version';
 import { Account, User } from '../../interfaces/application';
-import { FirebaseAppService } from '../../services/firebase-app';
-import { FirestoreBaseService } from '../../services/firestore';
+// import { FirebaseAppService } from '../../services/firebase-app';
+// import { FirestoreBaseService } from '../../services/firestore';
 
 @Component({
   tag: 'app-root'
@@ -36,8 +36,8 @@ export class AppRoot {
     await this.loadAppConfigSettings();
     await LocalStorageService.setLocalStoragePrefix(`${this.appConfigSettings.applicationSlug}-`);
     await App.initialize(); // must come after setting local storage prefix
-    await FirebaseAppService.initialize();
-    await FirestoreBaseService.initialize();
+    // await FirebaseAppService.initialize();
+    // await FirestoreBaseService.initialize();
     await UserPreferencesService.initialize();
     await Log.setLogLevel(this.appConfigSettings.logLevel || "debug");
     await this.initializeDatabase();
