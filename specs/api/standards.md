@@ -53,12 +53,12 @@ Components that need to respond to either signal bind to app state in `component
 @State() deviceInputType: DeviceInputType;
 
 componentWillLoad() {
-  App.bindAppState(this, 'viewportSize', (v) => { this.viewportSize = v; });
-  App.bindAppState(this, 'deviceInputType', (v) => { this.deviceInputType = v; });
+  App.bindState(this, 'viewportSize', (v) => { this.viewportSize = v; });
+  App.bindState(this, 'deviceInputType', (v) => { this.deviceInputType = v; });
 }
 
 disconnectedCallback() {
-  App.unbindAppState(this, ['viewportSize', 'deviceInputType']);
+  App.unbindState(this, ['viewportSize', 'deviceInputType']);
 }
 ```
 

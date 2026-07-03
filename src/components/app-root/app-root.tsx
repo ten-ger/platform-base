@@ -24,10 +24,6 @@ export class AppRoot {
   @State() selectedAccount: Account | null = null;
 
   menuElem: HTMLIonMenuElement;
-
-  menuRoutes = [
-    { title: "Home", icon: "home-outline", url: "/", component: "app-home" },
-  ]
   appManifest: any;
   appConfigSettings: any;
 
@@ -41,7 +37,7 @@ export class AppRoot {
     await UserPreferencesService.initialize();
     await Log.setLogLevel(this.appConfigSettings.logLevel || "debug");
     await this.initializeDatabase();
-    App.bindAppState(this, 'viewportSize', (value) => { this.viewportSize = value; });
+    App.bindState(this, 'viewportSize', (value) => { this.viewportSize = value; });
     // Detect user's system setting for preferred theme
     this.darkThemeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
     this.isSplitPaneWide = App.getState('isSplitPaneWide');
@@ -115,8 +111,7 @@ export class AppRoot {
   configureRoutes() {
     return [
       <ion-router useHash={false} >
-        <ion-route-redirect from='/' to={this.currentUser ? '/home' : '/login'} />
-        <ion-route url='/login' component='user-login' />
+        <ion-route-redirect from='/' to='/home' />
         <ion-route url='/home' component='app-home' />
       </ion-router>
     ]
@@ -164,27 +159,7 @@ export class AppRoot {
                 }
               </ion-header>
               <ion-content >
-                {/* Buttons menu */}
-                {(this.isLargeView && !this.isSplitPaneWide) &&
-                  this.menuRoutes.map(menuRoute =>
-                    <ion-button color='medium' href={`/${menuRoute.url ? menuRoute.url : menuRoute.component}`} title={menuRoute.title}>
-                      {!!menuRoute.icon &&
-                        <ion-icon slot='icon-only' name={menuRoute.icon} />
-                      }
-                    </ion-button>
-                  )
-                }
-                {/* Full menu */}
-                {(!this.isLargeView || this.isSplitPaneWide) &&
-                  this.menuRoutes.map(menuRoute =>
-                    <ion-item href={`/${menuRoute.url ? menuRoute.url : menuRoute.component}`}>
-                      {!!menuRoute.icon &&
-                        <ion-icon slot='start' name={menuRoute.icon} />
-                      }
-                      {menuRoute.title}
-                    </ion-item>
-                  )
-                }
+                <main-menu />
               </ion-content>
               <ion-footer>
                 <ion-toolbar>
@@ -192,7 +167,7 @@ export class AppRoot {
                     <ion-buttons slot='start'>
                       <ion-button slot='start' color='medium' fill='clear' title={`v${appVersion.full}`}
                         onClick={() => this.hResizeLeftNav()}>
-                        <ion-icon slot='icon-only' name={this.isSplitPaneWide ? 'chevron-back' : 'chevron-forward'} />
+                        <material-icon slot='icon-only' iconName={this.isSplitPaneWide ? 'chevron_left' : 'chevron_right'} />
                       </ion-button>
                     </ion-buttons>
                   }

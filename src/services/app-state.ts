@@ -24,7 +24,7 @@ class AppStateController {
         this.state = savedState;
       }
     }
-    catch (error) {
+    catch (error: any) {
       Log.error(`Error getting initial app state: ${error.message}. Check that an environment.json file is provided with a 'databaseName' property.`);
     }
   }
@@ -118,7 +118,7 @@ class AppStateController {
     this.emitEvent(`${property}Changed`, value);
   }
 
-  bindAppState(
+  bindState(
     component: any,
     stateKey: string,
     onChanged: (value: any) => void,
@@ -138,7 +138,7 @@ class AppStateController {
     document.addEventListener(eventName, component[handlerKey]);
   }
 
-  unbindAppState(component: any, stateKeys: string[]) {
+  unbindState(component: any, stateKeys: string[]) {
     for (let stateKey of stateKeys) {
       const eventName = `${stateKey}Changed`;
       const handlerKey = `__appState_${stateKey}_handler`;

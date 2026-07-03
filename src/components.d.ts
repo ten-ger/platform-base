@@ -426,6 +426,8 @@ export namespace Components {
         "width": string;
         "zoom": number;
     }
+    interface MainMenu {
+    }
     interface MaterialIcon {
         "color": string;
         "fill": number;
@@ -1225,6 +1227,12 @@ declare global {
         prototype: HTMLLayeredMapElement;
         new (): HTMLLayeredMapElement;
     };
+    interface HTMLMainMenuElement extends Components.MainMenu, HTMLStencilElement {
+    }
+    var HTMLMainMenuElement: {
+        prototype: HTMLMainMenuElement;
+        new (): HTMLMainMenuElement;
+    };
     interface HTMLMaterialIconElement extends Components.MaterialIcon, HTMLStencilElement {
     }
     var HTMLMaterialIconElement: {
@@ -1445,6 +1453,7 @@ declare global {
         "json-property-add": HTMLJsonPropertyAddElement;
         "json-value-editor": HTMLJsonValueEditorElement;
         "layered-map": HTMLLayeredMapElement;
+        "main-menu": HTMLMainMenuElement;
         "material-icon": HTMLMaterialIconElement;
         "popover-content": HTMLPopoverContentElement;
         "popover-menu": HTMLPopoverMenuElement;
@@ -1812,6 +1821,8 @@ declare namespace LocalJSX {
         "width"?: string;
         "zoom"?: number;
     }
+    interface MainMenu {
+    }
     interface MaterialIcon {
         "color"?: string;
         "fill"?: number;
@@ -2165,6 +2176,7 @@ declare namespace LocalJSX {
         "json-property-add": JsonPropertyAdd;
         "json-value-editor": JsonValueEditor;
         "layered-map": LayeredMap;
+        "main-menu": MainMenu;
         "material-icon": MaterialIcon;
         "popover-content": PopoverContent;
         "popover-menu": PopoverMenu;
@@ -2208,6 +2220,7 @@ declare module "@stencil/core" {
             "json-property-add": LocalJSX.JsonPropertyAdd & JSXBase.HTMLAttributes<HTMLJsonPropertyAddElement>;
             "json-value-editor": LocalJSX.JsonValueEditor & JSXBase.HTMLAttributes<HTMLJsonValueEditorElement>;
             "layered-map": LocalJSX.LayeredMap & JSXBase.HTMLAttributes<HTMLLayeredMapElement>;
+            "main-menu": LocalJSX.MainMenu & JSXBase.HTMLAttributes<HTMLMainMenuElement>;
             "material-icon": LocalJSX.MaterialIcon & JSXBase.HTMLAttributes<HTMLMaterialIconElement>;
             "popover-content": LocalJSX.PopoverContent & JSXBase.HTMLAttributes<HTMLPopoverContentElement>;
             "popover-menu": LocalJSX.PopoverMenu & JSXBase.HTMLAttributes<HTMLPopoverMenuElement>;
