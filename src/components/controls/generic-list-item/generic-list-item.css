@@ -1,0 +1,94 @@
+generic-list-item {
+  display: block;
+  width: 100%;
+}
+
+.gli-container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  overflow: hidden;
+  min-height: 48px;
+}
+
+.gli-divider {
+  flex: 0 0 1px;
+  background-color: var(--ion-border-color, #e0e0e0);
+  align-self: stretch;
+}
+
+.gli-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+
+.gli-block-data {
+  padding: 8px 12px;
+  gap: 2px;
+}
+
+.gli-block-image,
+.gli-block-custom {
+  padding: 0;
+}
+
+.gli-element-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gli-field-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px 8px;
+  overflow: hidden;
+}
+
+.gli-field {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.gli-field-label {
+  color: var(--ion-color-medium);
+  font-size: 0.8em;
+  margin-right: 3px;
+  flex-shrink: 0;
+}
+
+.gli-field-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gli-actions-btn {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-left: 1px solid var(--ion-border-color, #e0e0e0);
+  cursor: pointer;
+  color: var(--ion-color-medium);
+  padding: 0;
+  margin: 0;
+  align-self: stretch;
+}
+
+.gli-actions-btn:hover {
+  background-color: var(--ion-color-light, #f4f5f8);
+  color: var(--ion-color-dark);
+}

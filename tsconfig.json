@@ -8,12 +8,15 @@
       "dom",
       "es2021"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "module": "esnext",
     "target": "ES2021",
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "skipLibCheck": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "jsx": "react",
     "jsxFactory": "h"
   },

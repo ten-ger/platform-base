@@ -7,19 +7,19 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ColumnState, GridOptions } from "ag-grid-community";
 import { TextFieldTypes } from "@ionic/core";
+import { ListItemAction, ListItemBlock } from "./components/controls/generic-list-item/generic-list-item";
 import { GridButton } from "./components/controls/grid-button-menu/grid-button-menu";
 import { MapFeatureData } from "./components/controls/layered-map/layered-map";
 import { LineString, Point } from "ol/geom";
 import { PopoverMenuItem } from "./services/popover";
 export { ColumnState, GridOptions } from "ag-grid-community";
 export { TextFieldTypes } from "@ionic/core";
+export { ListItemAction, ListItemBlock } from "./components/controls/generic-list-item/generic-list-item";
 export { GridButton } from "./components/controls/grid-button-menu/grid-button-menu";
 export { MapFeatureData } from "./components/controls/layered-map/layered-map";
 export { LineString, Point } from "ol/geom";
 export { PopoverMenuItem } from "./services/popover";
 export namespace Components {
-    interface AccountSelectButton {
-    }
     interface AppHeaderToolbar {
         "pageTitle": string;
     }
@@ -36,6 +36,44 @@ export namespace Components {
         "labelText": string;
         "lines": 'none' | 'full' | 'inset';
         "setValue": (value: boolean) => Promise<void>;
+    }
+    interface CodeEditor {
+        /**
+          * Runs Monaco's built-in document formatter.
+         */
+        "format": () => Promise<void>;
+        /**
+          * Returns the current raw string value of the editor.
+         */
+        "getValue": () => Promise<string>;
+        /**
+          * Height of the editor area. Any valid CSS length. Default: '320px'.
+         */
+        "height": string;
+        /**
+          * Monaco language identifier. Default: 'json'.
+         */
+        "language": string;
+        /**
+          * When true, the editor is read-only. Default: false.
+         */
+        "readonly": boolean;
+        /**
+          * Optional JSON Schema object for validation. Only applied when language is 'json'. Passed directly to monaco.languages.json.jsonDefaults.setDiagnosticsOptions.
+         */
+        "schema": object | null;
+        /**
+          * Replaces the editor content with the supplied string.
+         */
+        "setValue": (content: string) => Promise<void>;
+        /**
+          * VS Code color theme: 'vs' | 'vs-dark' | 'hc-black'. Default: 'vs-dark'.
+         */
+        "theme": string;
+        /**
+          * The string content to display. Changing this prop replaces the editor content.
+         */
+        "value": string;
     }
     interface CollapsiCard {
         /**
@@ -256,6 +294,10 @@ export namespace Components {
         "isOpen": boolean;
         "position": { x: number; y: number };
     }
+    interface GenericListItem {
+        "actions"?: ListItemAction[];
+        "blocks": ListItemBlock[];
+    }
     interface GridButtonMenu {
         "buttons": GridButton[];
     }
@@ -384,8 +426,6 @@ export namespace Components {
         "width": string;
         "zoom": number;
     }
-    interface LoginAndAccountSelection {
-    }
     interface MaterialIcon {
         "color": string;
         "fill": number;
@@ -403,6 +443,32 @@ export namespace Components {
     }
     interface PopoverMenu {
         "menuOptions": PopoverMenuItem[];
+    }
+    interface QrCode {
+        /**
+          * Dark module color (hex/rgb/css)
+         */
+        "darkColor": string;
+        /**
+          * Error correction level — higher levels tolerate more damage but produce denser codes. L=7%, M=15%, Q=25%, H=30%
+         */
+        "errorCorrectionLevel": 'L' | 'M' | 'Q' | 'H';
+        /**
+          * Light module color (hex/rgb/css)
+         */
+        "lightColor": string;
+        /**
+          * Quiet zone (empty border) width in modules
+         */
+        "margin": number;
+        /**
+          * Width and height in pixels
+         */
+        "size": number;
+        /**
+          * The value to encode in the QR code
+         */
+        "value": string;
     }
     interface RadioSelect {
         /**
@@ -482,6 +548,10 @@ export namespace Components {
         "setValue": (value: number) => Promise<void>;
         "value": number;
     }
+    interface RichTextEditor {
+        "placeholder": string;
+        "value": string;
+    }
     interface SearchContent {
         "clear": () => Promise<void>;
         "defaultOptions": Function;
@@ -507,11 +577,6 @@ export namespace Components {
         "searchOptions": Function;
         "showClear": boolean;
         "value": any;
-    }
-    interface SensitivitySelect {
-        "enabled": boolean;
-        "selectedOption": '-1' | '0' | '1';
-        "width": string;
     }
     interface SingleSelect {
         /**
@@ -747,12 +812,14 @@ export namespace Components {
         "lines": 'none' | 'full' | 'inset';
         "setValue": (value: boolean) => Promise<void>;
     }
-    interface UserLogin {
-    }
 }
 export interface CheckInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLCheckInputElement;
+}
+export interface CodeEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLCodeEditorElement;
 }
 export interface CollapsiCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -814,6 +881,10 @@ export interface RangeInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLRangeInputElement;
 }
+export interface RichTextEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLRichTextEditorElement;
+}
 export interface SearchContentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSearchContentElement;
@@ -843,12 +914,6 @@ export interface ToggleInputCustomEvent<T> extends CustomEvent<T> {
     target: HTMLToggleInputElement;
 }
 declare global {
-    interface HTMLAccountSelectButtonElement extends Components.AccountSelectButton, HTMLStencilElement {
-    }
-    var HTMLAccountSelectButtonElement: {
-        prototype: HTMLAccountSelectButtonElement;
-        new (): HTMLAccountSelectButtonElement;
-    };
     interface HTMLAppHeaderToolbarElement extends Components.AppHeaderToolbar, HTMLStencilElement {
     }
     var HTMLAppHeaderToolbarElement: {
@@ -883,6 +948,23 @@ declare global {
     var HTMLCheckInputElement: {
         prototype: HTMLCheckInputElement;
         new (): HTMLCheckInputElement;
+    };
+    interface HTMLCodeEditorElementEventMap {
+        "valueChanged": string;
+    }
+    interface HTMLCodeEditorElement extends Components.CodeEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLCodeEditorElementEventMap>(type: K, listener: (this: HTMLCodeEditorElement, ev: CodeEditorCustomEvent<HTMLCodeEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLCodeEditorElementEventMap>(type: K, listener: (this: HTMLCodeEditorElement, ev: CodeEditorCustomEvent<HTMLCodeEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLCodeEditorElement: {
+        prototype: HTMLCodeEditorElement;
+        new (): HTMLCodeEditorElement;
     };
     interface HTMLCollapsiCardElementEventMap {
         "collapse": any;
@@ -1019,6 +1101,12 @@ declare global {
         prototype: HTMLFloatingToolbarElement;
         new (): HTMLFloatingToolbarElement;
     };
+    interface HTMLGenericListItemElement extends Components.GenericListItem, HTMLStencilElement {
+    }
+    var HTMLGenericListItemElement: {
+        prototype: HTMLGenericListItemElement;
+        new (): HTMLGenericListItemElement;
+    };
     interface HTMLGridButtonMenuElement extends Components.GridButtonMenu, HTMLStencilElement {
     }
     var HTMLGridButtonMenuElement: {
@@ -1137,12 +1225,6 @@ declare global {
         prototype: HTMLLayeredMapElement;
         new (): HTMLLayeredMapElement;
     };
-    interface HTMLLoginAndAccountSelectionElement extends Components.LoginAndAccountSelection, HTMLStencilElement {
-    }
-    var HTMLLoginAndAccountSelectionElement: {
-        prototype: HTMLLoginAndAccountSelectionElement;
-        new (): HTMLLoginAndAccountSelectionElement;
-    };
     interface HTMLMaterialIconElement extends Components.MaterialIcon, HTMLStencilElement {
     }
     var HTMLMaterialIconElement: {
@@ -1160,6 +1242,12 @@ declare global {
     var HTMLPopoverMenuElement: {
         prototype: HTMLPopoverMenuElement;
         new (): HTMLPopoverMenuElement;
+    };
+    interface HTMLQrCodeElement extends Components.QrCode, HTMLStencilElement {
+    }
+    var HTMLQrCodeElement: {
+        prototype: HTMLQrCodeElement;
+        new (): HTMLQrCodeElement;
     };
     interface HTMLRadioSelectElementEventMap {
         "valueChanged": any;
@@ -1194,6 +1282,23 @@ declare global {
     var HTMLRangeInputElement: {
         prototype: HTMLRangeInputElement;
         new (): HTMLRangeInputElement;
+    };
+    interface HTMLRichTextEditorElementEventMap {
+        "valueChanged": { value: string };
+    }
+    interface HTMLRichTextEditorElement extends Components.RichTextEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLRichTextEditorElementEventMap>(type: K, listener: (this: HTMLRichTextEditorElement, ev: RichTextEditorCustomEvent<HTMLRichTextEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLRichTextEditorElementEventMap>(type: K, listener: (this: HTMLRichTextEditorElement, ev: RichTextEditorCustomEvent<HTMLRichTextEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLRichTextEditorElement: {
+        prototype: HTMLRichTextEditorElement;
+        new (): HTMLRichTextEditorElement;
     };
     interface HTMLSearchContentElementEventMap {
         "valueChanged": any;
@@ -1230,12 +1335,6 @@ declare global {
     var HTMLSearchSelectElement: {
         prototype: HTMLSearchSelectElement;
         new (): HTMLSearchSelectElement;
-    };
-    interface HTMLSensitivitySelectElement extends Components.SensitivitySelect, HTMLStencilElement {
-    }
-    var HTMLSensitivitySelectElement: {
-        prototype: HTMLSensitivitySelectElement;
-        new (): HTMLSensitivitySelectElement;
     };
     interface HTMLSingleSelectElementEventMap {
         "valueChanged": any;
@@ -1322,18 +1421,12 @@ declare global {
         prototype: HTMLToggleInputElement;
         new (): HTMLToggleInputElement;
     };
-    interface HTMLUserLoginElement extends Components.UserLogin, HTMLStencilElement {
-    }
-    var HTMLUserLoginElement: {
-        prototype: HTMLUserLoginElement;
-        new (): HTMLUserLoginElement;
-    };
     interface HTMLElementTagNameMap {
-        "account-select-button": HTMLAccountSelectButtonElement;
         "app-header-toolbar": HTMLAppHeaderToolbarElement;
         "app-home": HTMLAppHomeElement;
         "app-root": HTMLAppRootElement;
         "check-input": HTMLCheckInputElement;
+        "code-editor": HTMLCodeEditorElement;
         "collapsi-card": HTMLCollapsiCardElement;
         "collapsi-list": HTMLCollapsiListElement;
         "data-grid": HTMLDataGridElement;
@@ -1343,6 +1436,7 @@ declare global {
         "file-drop-target": HTMLFileDropTargetElement;
         "float-input": HTMLFloatInputElement;
         "floating-toolbar": HTMLFloatingToolbarElement;
+        "generic-list-item": HTMLGenericListItemElement;
         "grid-button-menu": HTMLGridButtonMenuElement;
         "hover-icon-button": HTMLHoverIconButtonElement;
         "integer-input": HTMLIntegerInputElement;
@@ -1351,26 +1445,23 @@ declare global {
         "json-property-add": HTMLJsonPropertyAddElement;
         "json-value-editor": HTMLJsonValueEditorElement;
         "layered-map": HTMLLayeredMapElement;
-        "login-and-account-selection": HTMLLoginAndAccountSelectionElement;
         "material-icon": HTMLMaterialIconElement;
         "popover-content": HTMLPopoverContentElement;
         "popover-menu": HTMLPopoverMenuElement;
+        "qr-code": HTMLQrCodeElement;
         "radio-select": HTMLRadioSelectElement;
         "range-input": HTMLRangeInputElement;
+        "rich-text-editor": HTMLRichTextEditorElement;
         "search-content": HTMLSearchContentElement;
         "search-select": HTMLSearchSelectElement;
-        "sensitivity-select": HTMLSensitivitySelectElement;
         "single-select": HTMLSingleSelectElement;
         "text-input": HTMLTextInputElement;
         "textarea-input": HTMLTextareaInputElement;
         "toggle-icon-buttons": HTMLToggleIconButtonsElement;
         "toggle-input": HTMLToggleInputElement;
-        "user-login": HTMLUserLoginElement;
     }
 }
 declare namespace LocalJSX {
-    interface AccountSelectButton {
-    }
     interface AppHeaderToolbar {
         "pageTitle"?: string;
     }
@@ -1386,6 +1477,36 @@ declare namespace LocalJSX {
         "labelText"?: string;
         "lines"?: 'none' | 'full' | 'inset';
         "onValueChanged"?: (event: CheckInputCustomEvent<any>) => void;
+    }
+    interface CodeEditor {
+        /**
+          * Height of the editor area. Any valid CSS length. Default: '320px'.
+         */
+        "height"?: string;
+        /**
+          * Monaco language identifier. Default: 'json'.
+         */
+        "language"?: string;
+        /**
+          * Emitted on every content change with the current raw string value.
+         */
+        "onValueChanged"?: (event: CodeEditorCustomEvent<string>) => void;
+        /**
+          * When true, the editor is read-only. Default: false.
+         */
+        "readonly"?: boolean;
+        /**
+          * Optional JSON Schema object for validation. Only applied when language is 'json'. Passed directly to monaco.languages.json.jsonDefaults.setDiagnosticsOptions.
+         */
+        "schema"?: object | null;
+        /**
+          * VS Code color theme: 'vs' | 'vs-dark' | 'hc-black'. Default: 'vs-dark'.
+         */
+        "theme"?: string;
+        /**
+          * The string content to display. Changing this prop replaces the editor content.
+         */
+        "value"?: string;
     }
     interface CollapsiCard {
         /**
@@ -1577,6 +1698,10 @@ declare namespace LocalJSX {
         "isOpen"?: boolean;
         "position"?: { x: number; y: number };
     }
+    interface GenericListItem {
+        "actions"?: ListItemAction[];
+        "blocks"?: ListItemBlock[];
+    }
     interface GridButtonMenu {
         "buttons"?: GridButton[];
     }
@@ -1687,8 +1812,6 @@ declare namespace LocalJSX {
         "width"?: string;
         "zoom"?: number;
     }
-    interface LoginAndAccountSelection {
-    }
     interface MaterialIcon {
         "color"?: string;
         "fill"?: number;
@@ -1706,6 +1829,32 @@ declare namespace LocalJSX {
     }
     interface PopoverMenu {
         "menuOptions"?: PopoverMenuItem[];
+    }
+    interface QrCode {
+        /**
+          * Dark module color (hex/rgb/css)
+         */
+        "darkColor"?: string;
+        /**
+          * Error correction level — higher levels tolerate more damage but produce denser codes. L=7%, M=15%, Q=25%, H=30%
+         */
+        "errorCorrectionLevel"?: 'L' | 'M' | 'Q' | 'H';
+        /**
+          * Light module color (hex/rgb/css)
+         */
+        "lightColor"?: string;
+        /**
+          * Quiet zone (empty border) width in modules
+         */
+        "margin"?: number;
+        /**
+          * Width and height in pixels
+         */
+        "size"?: number;
+        /**
+          * The value to encode in the QR code
+         */
+        "value"?: string;
     }
     interface RadioSelect {
         /**
@@ -1769,6 +1918,11 @@ declare namespace LocalJSX {
         "onValueChanged"?: (event: RangeInputCustomEvent<any>) => void;
         "value"?: number;
     }
+    interface RichTextEditor {
+        "onValueChanged"?: (event: RichTextEditorCustomEvent<{ value: string }>) => void;
+        "placeholder"?: string;
+        "value"?: string;
+    }
     interface SearchContent {
         "defaultOptions"?: Function;
         "defaultValue"?: any;
@@ -1797,11 +1951,6 @@ declare namespace LocalJSX {
         "searchOptions"?: Function;
         "showClear"?: boolean;
         "value"?: any;
-    }
-    interface SensitivitySelect {
-        "enabled"?: boolean;
-        "selectedOption"?: '-1' | '0' | '1';
-        "width"?: string;
     }
     interface SingleSelect {
         /**
@@ -1992,14 +2141,12 @@ declare namespace LocalJSX {
         "lines"?: 'none' | 'full' | 'inset';
         "onValueChanged"?: (event: ToggleInputCustomEvent<any>) => void;
     }
-    interface UserLogin {
-    }
     interface IntrinsicElements {
-        "account-select-button": AccountSelectButton;
         "app-header-toolbar": AppHeaderToolbar;
         "app-home": AppHome;
         "app-root": AppRoot;
         "check-input": CheckInput;
+        "code-editor": CodeEditor;
         "collapsi-card": CollapsiCard;
         "collapsi-list": CollapsiList;
         "data-grid": DataGrid;
@@ -2009,6 +2156,7 @@ declare namespace LocalJSX {
         "file-drop-target": FileDropTarget;
         "float-input": FloatInput;
         "floating-toolbar": FloatingToolbar;
+        "generic-list-item": GenericListItem;
         "grid-button-menu": GridButtonMenu;
         "hover-icon-button": HoverIconButton;
         "integer-input": IntegerInput;
@@ -2017,32 +2165,31 @@ declare namespace LocalJSX {
         "json-property-add": JsonPropertyAdd;
         "json-value-editor": JsonValueEditor;
         "layered-map": LayeredMap;
-        "login-and-account-selection": LoginAndAccountSelection;
         "material-icon": MaterialIcon;
         "popover-content": PopoverContent;
         "popover-menu": PopoverMenu;
+        "qr-code": QrCode;
         "radio-select": RadioSelect;
         "range-input": RangeInput;
+        "rich-text-editor": RichTextEditor;
         "search-content": SearchContent;
         "search-select": SearchSelect;
-        "sensitivity-select": SensitivitySelect;
         "single-select": SingleSelect;
         "text-input": TextInput;
         "textarea-input": TextareaInput;
         "toggle-icon-buttons": ToggleIconButtons;
         "toggle-input": ToggleInput;
-        "user-login": UserLogin;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "account-select-button": LocalJSX.AccountSelectButton & JSXBase.HTMLAttributes<HTMLAccountSelectButtonElement>;
             "app-header-toolbar": LocalJSX.AppHeaderToolbar & JSXBase.HTMLAttributes<HTMLAppHeaderToolbarElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "check-input": LocalJSX.CheckInput & JSXBase.HTMLAttributes<HTMLCheckInputElement>;
+            "code-editor": LocalJSX.CodeEditor & JSXBase.HTMLAttributes<HTMLCodeEditorElement>;
             "collapsi-card": LocalJSX.CollapsiCard & JSXBase.HTMLAttributes<HTMLCollapsiCardElement>;
             "collapsi-list": LocalJSX.CollapsiList & JSXBase.HTMLAttributes<HTMLCollapsiListElement>;
             "data-grid": LocalJSX.DataGrid & JSXBase.HTMLAttributes<HTMLDataGridElement>;
@@ -2052,6 +2199,7 @@ declare module "@stencil/core" {
             "file-drop-target": LocalJSX.FileDropTarget & JSXBase.HTMLAttributes<HTMLFileDropTargetElement>;
             "float-input": LocalJSX.FloatInput & JSXBase.HTMLAttributes<HTMLFloatInputElement>;
             "floating-toolbar": LocalJSX.FloatingToolbar & JSXBase.HTMLAttributes<HTMLFloatingToolbarElement>;
+            "generic-list-item": LocalJSX.GenericListItem & JSXBase.HTMLAttributes<HTMLGenericListItemElement>;
             "grid-button-menu": LocalJSX.GridButtonMenu & JSXBase.HTMLAttributes<HTMLGridButtonMenuElement>;
             "hover-icon-button": LocalJSX.HoverIconButton & JSXBase.HTMLAttributes<HTMLHoverIconButtonElement>;
             "integer-input": LocalJSX.IntegerInput & JSXBase.HTMLAttributes<HTMLIntegerInputElement>;
@@ -2060,21 +2208,20 @@ declare module "@stencil/core" {
             "json-property-add": LocalJSX.JsonPropertyAdd & JSXBase.HTMLAttributes<HTMLJsonPropertyAddElement>;
             "json-value-editor": LocalJSX.JsonValueEditor & JSXBase.HTMLAttributes<HTMLJsonValueEditorElement>;
             "layered-map": LocalJSX.LayeredMap & JSXBase.HTMLAttributes<HTMLLayeredMapElement>;
-            "login-and-account-selection": LocalJSX.LoginAndAccountSelection & JSXBase.HTMLAttributes<HTMLLoginAndAccountSelectionElement>;
             "material-icon": LocalJSX.MaterialIcon & JSXBase.HTMLAttributes<HTMLMaterialIconElement>;
             "popover-content": LocalJSX.PopoverContent & JSXBase.HTMLAttributes<HTMLPopoverContentElement>;
             "popover-menu": LocalJSX.PopoverMenu & JSXBase.HTMLAttributes<HTMLPopoverMenuElement>;
+            "qr-code": LocalJSX.QrCode & JSXBase.HTMLAttributes<HTMLQrCodeElement>;
             "radio-select": LocalJSX.RadioSelect & JSXBase.HTMLAttributes<HTMLRadioSelectElement>;
             "range-input": LocalJSX.RangeInput & JSXBase.HTMLAttributes<HTMLRangeInputElement>;
+            "rich-text-editor": LocalJSX.RichTextEditor & JSXBase.HTMLAttributes<HTMLRichTextEditorElement>;
             "search-content": LocalJSX.SearchContent & JSXBase.HTMLAttributes<HTMLSearchContentElement>;
             "search-select": LocalJSX.SearchSelect & JSXBase.HTMLAttributes<HTMLSearchSelectElement>;
-            "sensitivity-select": LocalJSX.SensitivitySelect & JSXBase.HTMLAttributes<HTMLSensitivitySelectElement>;
             "single-select": LocalJSX.SingleSelect & JSXBase.HTMLAttributes<HTMLSingleSelectElement>;
             "text-input": LocalJSX.TextInput & JSXBase.HTMLAttributes<HTMLTextInputElement>;
             "textarea-input": LocalJSX.TextareaInput & JSXBase.HTMLAttributes<HTMLTextareaInputElement>;
             "toggle-icon-buttons": LocalJSX.ToggleIconButtons & JSXBase.HTMLAttributes<HTMLToggleIconButtonsElement>;
             "toggle-input": LocalJSX.ToggleInput & JSXBase.HTMLAttributes<HTMLToggleInputElement>;
-            "user-login": LocalJSX.UserLogin & JSXBase.HTMLAttributes<HTMLUserLoginElement>;
         }
     }
 }

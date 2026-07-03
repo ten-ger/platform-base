@@ -1,0 +1,88 @@
+/* ─── Wrapper ────────────────────────────────────────────────── */
+
+.rte-wrap {
+  border: 1px solid var(--ion-border-color, #ddd);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--ion-item-background, #fff);
+  margin: 8px 16px;
+}
+
+/* ─── Toolbar ────────────────────────────────────────────────── */
+
+.rte-toolbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--ion-border-color, #ddd);
+  background: var(--ion-color-light, #f4f5f8);
+}
+
+.rte-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 5px;
+  border: none;
+  background: transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  color: var(--ion-text-color, #333);
+  transition: background 0.12s;
+  line-height: 1;
+}
+
+.rte-btn:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.rte-btn ion-icon {
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.rte-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--ion-border-color, #ddd);
+  margin: 0 3px;
+  flex-shrink: 0;
+}
+
+/* ─── Editable area ──────────────────────────────────────────── */
+
+.rte-content {
+  min-height: 120px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ion-text-color, #333);
+}
+
+.rte-content:empty:before {
+  content: attr(data-placeholder);
+  color: var(--ion-color-medium, #92949c);
+  pointer-events: none;
+}
+
+/* ─── Content element styles ─────────────────────────────────── */
+
+.rte-content h2        { font-size: 1.4rem;   font-weight: 600; margin: 0.4em 0 0.2em; }
+.rte-content h3        { font-size: 1.15rem;  font-weight: 600; margin: 0.4em 0 0.2em; }
+.rte-content p         { margin: 0 0 0.5em; }
+.rte-content ul,
+.rte-content ol        { margin: 0 0 0.5em; padding-left: 1.5em; }
+.rte-content li        { margin: 0.15em 0; }
+.rte-content a         { color: var(--ion-color-primary, #3880ff); text-decoration: underline; }
+.rte-content strong,
+.rte-content b         { font-weight: 700; }
+.rte-content em,
+.rte-content i         { font-style: italic; }
+.rte-content u         { text-decoration: underline; }

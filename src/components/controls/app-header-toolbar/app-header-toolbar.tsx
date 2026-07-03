@@ -1,7 +1,6 @@
 import { Component, h, Listen, Prop, State } from "@stencil/core";
 import { App } from "../../../services/app-state";
 import { Log } from "../../../services/log";
-import { Account, Environment, User } from "../../../interfaces/application";
 
 @Component({
   tag: 'app-header-toolbar'
@@ -11,9 +10,6 @@ export class AppHeaderToolbar {
   @Prop() pageTitle: string;
 
   @State() isLargeView: boolean;
-  @State() selectedEnvironment: Environment;
-  @State() selectedAccount: Account;
-  @State() currentUser: User;
 
   async componentWillLoad() {
     try {
@@ -36,9 +32,6 @@ export class AppHeaderToolbar {
   }
   
   setFromAppState() {
-    this.selectedEnvironment = App.getState("environment");
-    this.selectedAccount = App.getState("account");
-    this.currentUser = App.getState("user");
   }
 
   render() {
@@ -53,31 +46,7 @@ export class AppHeaderToolbar {
         {this.isLargeView &&
           <div slot='end' class='flex row items-center' style={{ marginRight: '16px' }}>
             <div class='flex col justify-end' style={{ fontSize: 'small' }}>
-              <div class=''>
-                {this.selectedAccount && [
-                  <div style={{ marginRight: '4px' }}
-                    title={this.selectedAccount.id.toString()}>
-                    {this.selectedAccount.name}
-                  </div>
-                ]}
-                {!this.selectedAccount && [
-                  <div style={{ marginRight: '4px' }}>Login</div>
-                ]}
-              </div>
-              <div class='flex row items-center justify-end gap-4'>
-                {this.currentUser && [
-                  <div style={{ marginRight: '4px' }}
-                    title={this.currentUser["custom:user_id"]}>
-                    {this.currentUser.email}
-                  </div>
-                ]}
-                {this.selectedEnvironment && [
-                  <div style={{ marginRight: '4px' }}
-                    title={this.selectedEnvironment.id.toString()}>
-                    [{this.selectedEnvironment.name}]
-                  </div>
-                ]}
-              </div>
+              
             </div>
             <account-select-button />
           </div>
